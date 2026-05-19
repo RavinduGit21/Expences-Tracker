@@ -1,0 +1,60 @@
+{
+  "users": {
+    "demo": {
+      "passwordHash": "$2a$10$zBmrxX62MsJPuiHXOR0GMOmB1wthMBqG5bTlhqwthK6cKEBX1AjGG",
+      "name": "Demo User",
+      "categories": [
+        "Food",
+        "Transport",
+        "Utilities",
+        "Misc"
+      ],
+      "settings": {
+        "currency": "LKR",
+        "budget": 0
+      },
+      "expenses": [],
+      "incomes": []
+    },
+    "demo ": {
+      "passwordHash": "$2a$10$fAjVcOMYTfQgjLPhZLZdFeodBRhx8Hl0uiP7bIVQmAdXKcWJ050ve",
+      "name": "",
+      "categories": [
+        "Food",
+        "Transport",
+        "Utilities",
+        "Misc"
+      ],
+      "settings": {
+        "currency": "LKR",
+        "budget": 100000,
+        "categories": [
+          "Food",
+          "Transport",
+          "Utilities",
+          "Misc"
+        ],
+        "salary": 200000
+      },
+      "expenses": [
+        {
+          "type": "expense",
+          "amount": 1000,
+          "date": "2025-11-05",
+          "desc": "",
+          "category": "Food",
+          "id": "srv_1762357637599"
+        },
+        {
+          "type": "expense",
+          "amount": 1200,
+          "date": "2025-11-05",
+          "desc": "",
+          "category": "",
+          "id": "srv_1762357270629"
+        }
+      ],
+      "incomes": []
+    }
+  }
+}
