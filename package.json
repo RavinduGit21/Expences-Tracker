@@ -1,6 +1,6 @@
 {
   "name": "card-expense-tracker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "main": "electron/main.cjs",
   "description": "Offline Windows desktop expense tracker for multiple cards",
@@ -37,7 +37,7 @@
       }
     ],
     "directories": {
-      "output": "release"
+      "output": "release/v${version}"
     },
     "files": [
       "dist/**/*",

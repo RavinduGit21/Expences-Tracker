@@ -112,6 +112,7 @@ export default function App() {
   const [newCategory, setNewCategory] = useState('');
   const [dataPath, setDataPath] = useState('');
   const [updateState, setUpdateState] = useState({ status: 'idle' });
+  const [showUpdatePopup, setShowUpdatePopup] = useState(false);
   const [setupCards, setSetupCards] = useState(() => [
     { selected: true, bankId: 'cash', name: 'Cash', logoText: 'CASH', color: '#334155', accent: '#94a3b8', openingBalance: '' }
   ]);
@@ -135,7 +136,12 @@ export default function App() {
 
   useEffect(() => {
     if (!window.appUpdates?.onStatus) return undefined;
-    return window.appUpdates.onStatus((payload) => setUpdateState(payload));
+    return window.appUpdates.onStatus((payload) => {
+      setUpdateState(payload);
+      if (payload.status === 'available') {
+        setShowUpdatePopup(true);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -646,6 +652,23 @@ export default function App() {
         </section>
       </main>
       <footer>{dataPath ? `Data file: ${dataPath}` : 'Browser preview mode'}</footer>
+
+      {showUpdatePopup && updateState.status === 'available' && (
+        <div className="update-modal-overlay">
+          <div className="update-modal">
+            <div className="update-modal-icon">✨</div>
+            <h3>New Update Available!</h3>
+            <p>Version <strong>{updateState.version}</strong> has been released and is ready to download. Get the latest features and bug fixes now!</p>
+            <div className="update-modal-actions">
+              <button className="primary-action" type="button" onClick={() => {
+                setShowUpdatePopup(false);
+                downloadUpdate();
+              }}>Update Now</button>
+              <button type="button" onClick={() => setShowUpdatePopup(false)}>Maybe Later</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
