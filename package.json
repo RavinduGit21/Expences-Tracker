@@ -1,6 +1,6 @@
 {
   "name": "card-expense-tracker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "main": "electron/main.cjs",
   "description": "Offline Windows desktop expense tracker for multiple cards",
@@ -31,8 +31,8 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "YOUR_GITHUB_USERNAME",
-        "repo": "card-expense-tracker"
+        "owner": "RavinduGit21",
+        "repo": "Expences-Tracker"
       }
     ],
     "directories": {
