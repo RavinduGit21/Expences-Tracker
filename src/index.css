@@ -23,7 +23,8 @@ body,
 body {
   margin: 0;
   background: #f6f7fb;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 button,
@@ -199,8 +200,7 @@ label {
 .app-shell {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
   padding: 14px 18px 8px;
 }
 
@@ -407,7 +407,6 @@ h2 {
   gap: 10px;
   align-items: start;
   min-height: 0;
-  overflow: hidden;
 }
 
 .main-column,
@@ -423,7 +422,6 @@ h2 {
 
 .side-column {
   grid-template-rows: auto auto minmax(0, 1fr);
-  overflow: hidden;
 }
 
 .card-bars,
@@ -491,7 +489,6 @@ h2 {
 
 .transactions-panel {
   min-height: 0;
-  overflow: hidden;
 }
 
 .filters {
