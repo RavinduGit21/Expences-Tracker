@@ -508,7 +508,7 @@ h2 {
 
 .transaction-row {
   display: grid;
-  grid-template-columns: 58px minmax(0, 1fr) 130px auto auto;
+  grid-template-columns: 58px minmax(0, 1fr) 130px auto auto auto;
   gap: 10px;
   align-items: center;
   border: 1px solid #edf1f7;
@@ -784,7 +784,8 @@ body.dark-theme .topbar .eyebrow {
 
 body.dark-theme .panel,
 body.dark-theme .intro-panel,
-body.dark-theme .setup-panel {
+body.dark-theme .setup-panel,
+body.dark-theme .entry-panel {
   background: #1e293b;
   border-color: #334155;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
@@ -909,4 +910,35 @@ body.dark-theme .theme-toggle {
 
 body.dark-theme .theme-toggle:hover {
   background: #475569;
+}
+
+body.dark-theme .segmented {
+  border-color: #334155;
+}
+
+body.dark-theme .segmented button {
+  background: #0f172a;
+  color: #94a3b8;
+}
+
+body.dark-theme .segmented button.active {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+body.dark-theme .danger-link {
+  background: transparent !important;
+  color: #ef4444 !important;
+}
+
+body.dark-theme .danger-link:hover {
+  background: #7f1d1d !important;
+  color: #fca5a5 !important;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
