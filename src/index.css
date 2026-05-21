@@ -243,8 +243,9 @@ h2 {
 
 .topbar-actions {
   display: grid;
-  grid-template-columns: 160px auto auto auto;
-  gap: 10px;
+  grid-template-columns: auto 140px auto auto auto;
+  gap: 8px;
+  align-items: center;
 }
 
 .topbar-actions button,
@@ -761,6 +762,7 @@ footer {
 }
 
 /* --- Dark Mode Theme Overrides --- */
+html.dark-theme,
 body.dark-theme {
   background: #0f172a;
   color: #f8fafc;
@@ -934,11 +936,4 @@ body.dark-theme .danger-link {
 body.dark-theme .danger-link:hover {
   background: #7f1d1d !important;
   color: #fca5a5 !important;
-}
-
-.topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
 }
