@@ -113,6 +113,11 @@ export default function App() {
   const [dataPath, setDataPath] = useState('');
   const [updateState, setUpdateState] = useState({ status: 'idle' });
   const [showUpdatePopup, setShowUpdatePopup] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const saved = localStorage.getItem('expense_tracker_theme');
+    if (saved) return saved === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
   const [setupCards, setSetupCards] = useState(() => [
     { selected: true, bankId: 'cash', name: 'Cash', logoText: 'CASH', color: '#334155', accent: '#94a3b8', openingBalance: '' }
   ]);
@@ -143,6 +148,15 @@ export default function App() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('expense_tracker_theme', isDarkMode ? 'dark' : 'light');
+    if (isDarkMode) {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
+  }, [isDarkMode]);
 
   useEffect(() => {
     if (!loaded) return;
@@ -446,6 +460,9 @@ export default function App() {
           <h1>Card Expense Tracker</h1>
         </div>
         <div className="topbar-actions">
+          <button type="button" className="theme-toggle" onClick={() => setIsDarkMode(!isDarkMode)} aria-label="Toggle dark mode">
+            {isDarkMode ? '☀️ Light' : '🌙 Dark'}
+          </button>
           <input type="month" value={month} onChange={(event) => setMonth(event.target.value)} aria-label="Report month" />
           <UpdateControl state={updateState} onCheck={checkUpdates} onDownload={downloadUpdate} onInstall={installUpdate} />
           <button type="button" onClick={exportCsv}>Export CSV</button>
