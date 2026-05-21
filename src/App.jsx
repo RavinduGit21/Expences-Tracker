@@ -107,6 +107,7 @@ export default function App() {
     note: '',
     type: 'expense'
   });
+  const [editingId, setEditingId] = useState(null);
   const [newCard, setNewCard] = useState({ name: '', limit: '', openingBalance: '', color: '#0f766e' });
   const [newCategory, setNewCategory] = useState('');
   const [dataPath, setDataPath] = useState('');
@@ -203,18 +204,53 @@ export default function App() {
     const amount = Number(entry.amount);
     if (!amount || amount <= 0) return;
     const item = {
-      id: uid(entry.type === 'income' ? 'inc' : 'exp'),
+      id: editingId || uid(entry.type === 'income' ? 'inc' : 'exp'),
       amount,
       date: entry.date || today(),
       category: entry.category || 'Other',
       cardId: entry.cardId,
       note: entry.note.trim()
     };
-    updateData((current) => ({
-      ...current,
-      expenses: entry.type === 'expense' ? [item, ...current.expenses] : current.expenses,
-      incomes: entry.type === 'income' ? [item, ...current.incomes] : current.incomes
-    }));
+    updateData((current) => {
+      let nextExpenses = current.expenses;
+      let nextIncomes = current.incomes;
+
+      if (editingId) {
+        nextExpenses = nextExpenses.filter(i => i.id !== editingId);
+        nextIncomes = nextIncomes.filter(i => i.id !== editingId);
+      }
+
+      if (entry.type === 'expense') {
+        nextExpenses = [item, ...nextExpenses].sort((a, b) => b.date.localeCompare(a.date));
+      } else {
+        nextIncomes = [item, ...nextIncomes].sort((a, b) => b.date.localeCompare(a.date));
+      }
+
+      return {
+        ...current,
+        expenses: nextExpenses,
+        incomes: nextIncomes
+      };
+    });
+    setEntry((current) => ({ ...current, amount: '', note: '', type: 'expense' }));
+    setEditingId(null);
+  }
+
+  function editTransaction(item) {
+    setEditingId(item.id);
+    setEntry({
+      amount: String(item.amount),
+      date: item.date,
+      category: item.category,
+      cardId: item.cardId,
+      note: item.note,
+      type: item.type
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function cancelEdit() {
+    setEditingId(null);
     setEntry((current) => ({ ...current, amount: '', note: '', type: 'expense' }));
   }
 
@@ -415,8 +451,8 @@ export default function App() {
         <section className="entry-panel">
           <div className="section-title">
             <div>
-              <p className="eyebrow">Fast entry</p>
-              <h2>Add expense</h2>
+              <p className="eyebrow">{editingId ? 'Edit entry' : 'Fast entry'}</p>
+              <h2>{editingId ? 'Update transaction' : 'Add expense'}</h2>
             </div>
             <div className="segmented">
               <button type="button" className={entry.type === 'expense' ? 'active' : ''} onClick={() => setEntry({ ...entry, type: 'expense' })}>Expense</button>
@@ -449,7 +485,10 @@ export default function App() {
               <span>Note</span>
               <input value={entry.note} onChange={(event) => setEntry({ ...entry, note: event.target.value })} placeholder="Short note, merchant, or reason" />
             </label>
-            <button className="primary-action" type="submit">Add transaction</button>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button className="primary-action" type="submit" style={{ flex: 1 }}>{editingId ? 'Save changes' : 'Add transaction'}</button>
+              {editingId && <button type="button" onClick={cancelEdit} style={{ flex: 1 }}>Cancel</button>}
+            </div>
           </form>
 
           <div className="quick-row">
@@ -522,6 +561,7 @@ export default function App() {
                         <span>{item.type === 'income' ? 'Income' : item.category} / {card?.name || 'Card'}</span>
                       </div>
                       <div className={`transaction-amount ${item.type === 'income' ? 'income' : ''}`}>{item.type === 'income' ? '+' : '-'} {money(item.amount, settings.currency)}</div>
+                      <button type="button" onClick={() => editTransaction(item)}>Edit</button>
                       <button type="button" onClick={() => duplicateTransaction(item)}>Repeat</button>
                       <button type="button" className="danger-link" onClick={() => deleteTransaction(item.type, item.id)}>Delete</button>
                     </div>

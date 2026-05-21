@@ -1,6 +1,6 @@
 {
   "name": "card-expense-tracker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "main": "electron/main.cjs",
   "description": "Offline Windows desktop expense tracker for multiple cards",
@@ -28,6 +28,7 @@
   "build": {
     "appId": "com.local.cardexpensetracker",
     "productName": "Card Expense Tracker",
+    "artifactName": "Card-Expense-Tracker-Setup-${version}.${ext}",
     "publish": [
       {
         "provider": "github",
@@ -44,6 +45,7 @@
       "package.json"
     ],
     "win": {
+      "icon": "build/icon.png",
       "target": [
         "nsis",
         "portable"
