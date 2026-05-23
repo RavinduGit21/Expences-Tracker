@@ -153,8 +153,10 @@ export default function App() {
     localStorage.setItem('expense_tracker_theme', isDarkMode ? 'dark' : 'light');
     if (isDarkMode) {
       document.body.classList.add('dark-theme');
+      document.documentElement.classList.add('dark-theme');
     } else {
       document.body.classList.remove('dark-theme');
+      document.documentElement.classList.remove('dark-theme');
     }
   }, [isDarkMode]);
 
